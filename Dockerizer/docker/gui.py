@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 from RuntimeWatch import most_recent_history
-from Dockerizer.docker.config import DOCKER_HISTORY_JSON, CONTAINER_PORT, HOST_PORT
 
+from Dockerizer.docker.config import DOCKER_HISTORY_JSON, CONTAINER_PORT, HOST_PORT
 
 LABEL_COL_WIDTH = 20
 INPUT_COL_WIDTH = 50

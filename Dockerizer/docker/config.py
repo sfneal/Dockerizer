@@ -1,4 +1,5 @@
 import os
+
 from databasetools import JSON
 
 _HISTORY_JSON_ROOT = os.path.join(os.path.expanduser('~'), '.Dockerizer')
