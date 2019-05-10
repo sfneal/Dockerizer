@@ -1,7 +1,7 @@
 import os
 
 from RuntimeWatch import TaskTracker
-from dirutility import SystemCommand
+from dirutility import SystemCommand, Versions
 
 
 def unpack_image_name(image_name):
@@ -43,7 +43,10 @@ class DockerCommands:
     @property
     def docker_image(self):
         """Concatenate DockerHub user name and environment name to create docker image tag."""
-        return '{user}/{repo}:{tag}'.format(user=self.username, repo=self.repo, tag=self.tag)
+        i = '{user}/{repo}'.format(user=self.username, repo=self.repo)
+        if self.tag:
+            i += ':{tag}'.format(tag=self.tag)
+        return i
 
     @property
     def dockerfile_path(self):
@@ -146,3 +149,13 @@ class Docker(TaskTracker):
         output = SystemCommand(self.cmd.images).output
         output.pop(0)
         return [row.split(' ', 1)[0] + ':' + row.split(' ', 1)[1].strip().split(' ', 1)[0] for row in output]
+
+    def image_tags(self):
+        """Return a list of available tags for a docker image sorted by version."""
+        cmd = "wget -q https://registry.hub.docker.com/v1/repositories/{0}/{1}/tags ".format(self.cmd.username,
+                                                                                             self.cmd.repo)
+        cmd += "-O -  | sed -e 's/[][]//g' -e 's/"
+        cmd += '"//g'
+        cmd += "' -e 's/ //g' | tr '}' '\n'  | awk -F: '{print $3}'"
+
+        return Versions(SystemCommand(cmd).output).sorted
