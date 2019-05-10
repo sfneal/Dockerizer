@@ -67,6 +67,11 @@ class DockerCommands:
         """Returns a Docker 'push' command string."""
         return 'docker push {0}'.format(self.docker_image)
 
+    @property
+    def pull(self):
+        """Returns a Docker 'pull' command string."""
+        return 'docker pull {0}'.format(self.docker_image)
+
 
 class Docker(TaskTracker):
     def __init__(self, source=None, repo=None, tag=None, username=None, host_port=None, container_port=None,
@@ -114,3 +119,10 @@ class Docker(TaskTracker):
         sc = SystemCommand(self.cmd.push, decode_output=False)
         self.add_command(sc.command)
         self.add_task('Pushed Docker image {0} to DockerHub repo'.format(self.cmd.docker_image))
+
+    def pull(self):
+        """Push a docker image to a DockerHub repo."""
+        print('Pulling Docker image ({0})'.format(self.cmd.docker_image))
+        sc = SystemCommand(self.cmd.pull, decode_output=False)
+        self.add_command(sc.command)
+        self.add_task('Pulled Docker image {0} from DockerHub repo'.format(self.cmd.docker_image))
