@@ -33,7 +33,6 @@ setup(
     url='https://github.com/mrstephenneal/Dockerizer',
     entry_points={
         'console_scripts': [
-            'dockerize = Dockerizer.dockerize:main',
             'dockerizer = Dockerizer.dockerize:main'
         ]
     },
