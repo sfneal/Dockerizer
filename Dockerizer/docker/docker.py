@@ -7,7 +7,9 @@ from dirutility import SystemCommand
 def unpack_image_name(image_name):
     """Retrieve a dict with (user, repo, tag) keys by extracting values from a Docker image name string."""
     split = image_name.split('/', 1)
-    return {'username': split[0], 'repo': split[1].split(':', 1)[0], 'tag': split[1].split(':', 1)[1]}
+    return {'username': split[0],
+            'repo': split[1].split(':', 1)[0] if ':' in image_name else split[1],
+            'tag': split[1].split(':', 1)[1] if ':' in image_name else None}
 
 
 class DockerCommands:
