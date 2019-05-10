@@ -35,7 +35,8 @@ setup(
     entry_points={
         'console_scripts': [
             'dockerizer = Dockerizer.dockerize:main',
-            'morningpull = Dockerizer.morning_pull:main'
+            'morningpull = Dockerizer.morning_pull:main',
+            'docker-reset = Dockerizer.reset:main'
         ]
     },
     license='',
