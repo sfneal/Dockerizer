@@ -5,9 +5,9 @@ from dirutility import SystemCommand
 
 
 def unpack_image_name(image_name):
-    """Retrieve a (user, repo, tag) tuple by extracting values from a Docker image name string."""
+    """Retrieve a dict with (user, repo, tag) keys by extracting values from a Docker image name string."""
     split = image_name.split('/', 1)
-    return split[0], split[1].split(':', 1)[0], split[1].split(':', 1)[1]
+    return {'username': split[0], 'repo': split[1].split(':', 1)[0], 'tag': split[1].split(':', 1)[1]}
 
 
 class DockerCommands:
@@ -78,6 +78,11 @@ class DockerCommands:
         """Returns a Docker 'pull' command string."""
         return 'docker pull {0}'.format(self.docker_image)
 
+    @property
+    def images(self):
+        """Retrieve's a Docker 'images' command string."""
+        return 'docker images'
+
 
 class Docker(TaskTracker):
     def __init__(self, source=None, repo=None, tag=None, username=None, host_port=None, container_port=None,
@@ -132,3 +137,10 @@ class Docker(TaskTracker):
         sc = SystemCommand(self.cmd.pull, decode_output=False)
         self.add_command(sc.command)
         self.add_task('Pulled Docker image {0} from DockerHub repo'.format(self.cmd.docker_image))
+
+    @property
+    def images(self):
+        """Return a list of Docker images on the current machine."""
+        output = SystemCommand(self.cmd.images).output
+        output.pop(0)
+        return [row.split(' ', 1)[0] + ':' + row.split(' ', 1)[1].strip().split(' ', 1)[0] for row in output]
