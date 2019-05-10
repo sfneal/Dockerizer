@@ -88,6 +88,21 @@ class DockerCommands:
         """Retrieve's a Docker 'images' command string."""
         return 'docker images'
 
+    @property
+    def containers(self):
+        """Return a list of containers on the current machine."""
+        return 'docker ps -a -q'
+
+    @property
+    def delete_containers(self):
+        """Delete all containers on the current machine."""
+        return 'docker rm $({0})'.format(self.containers)
+
+    @property
+    def delete_images(self):
+        """Retrieve a list of all images on the current machine."""
+        return 'docker rmi $(docker images -q)'
+
 
 class Docker(TaskTracker):
     def __init__(self, source=None, repo=None, tag=None, username=None, host_port=None, container_port=None,
@@ -139,7 +154,7 @@ class Docker(TaskTracker):
     def pull(self, resolve_tag=True):
         """Push a docker image to a DockerHub repo."""
         if resolve_tag and not self.cmd.tag:
-            self.cmd.tag = self.image_tags()[0]
+            self.cmd.tag = self.image_tags[0]
         print('Pulling Docker image ({0})'.format(self.cmd.docker_image))
         sc = SystemCommand(self.cmd.pull, decode_output=False)
         self.add_command(sc.command)
@@ -152,6 +167,7 @@ class Docker(TaskTracker):
         output.pop(0)
         return [row.split(' ', 1)[0] + ':' + row.split(' ', 1)[1].strip().split(' ', 1)[0] for row in output]
 
+    @property
     def image_tags(self):
         """Return a list of available tags for a docker image sorted by version."""
         cmd = "wget -q https://registry.hub.docker.com/v1/repositories/{0}/{1}/tags ".format(self.cmd.username,
@@ -161,3 +177,18 @@ class Docker(TaskTracker):
         cmd += "' -e 's/ //g' | tr '}' '\n'  | awk -F: '{print $3}'"
 
         return Versions(SystemCommand(cmd).output).sorted
+
+    @property
+    def containers(self):
+        """Return a list of containers on the current machine."""
+        return SystemCommand(self.cmd.containers).output
+
+    def delete_containers(self):
+        """Delete all containers on the current machine."""
+        if len(self.containers) > 0:
+            SystemCommand(self.cmd.delete_containers)
+
+    def delete_images(self):
+        """Retrieve a list of all images on the current machine."""
+        if len(self.images) > 0:
+            return SystemCommand(self.cmd.delete_images).execute()
