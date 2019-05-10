@@ -1,7 +1,8 @@
 import os
 import shutil
-from databasetools import JSON
+
 from RuntimeWatch import TaskTracker
+from databasetools import JSON
 
 
 class Dockerrun(TaskTracker):

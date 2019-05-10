@@ -1,8 +1,7 @@
 import os
 
-from dirutility import SystemCommand
-
 from RuntimeWatch import TaskTracker
+from dirutility import SystemCommand
 
 
 class DockerCommands:
