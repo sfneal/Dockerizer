@@ -5,8 +5,8 @@ from dirutility import SystemCommand
 
 
 class DockerCommands:
-    def __init__(self, source, repo, tag, username, host_port=None, container_port=None, dockerfile='Dockerfile',
-                 build_cache=True):
+    def __init__(self, source=None, repo=None, tag=None, username=None, host_port=None, container_port=None,
+                 dockerfile='Dockerfile', build_cache=True):
         """
         A collection of properties and methods that return docker command strings.
 
@@ -69,8 +69,8 @@ class DockerCommands:
 
 
 class Docker(TaskTracker):
-    def __init__(self, source, repo, tag, username, host_port=None, container_port=None, dockerfile='Dockerfile',
-                 build_cache=True):
+    def __init__(self, source=None, repo=None, tag=None, username=None, host_port=None, container_port=None,
+                 dockerfile='Dockerfile', build_cache=True):
         """
         Docker hub deployment helper.
 
