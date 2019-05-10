@@ -1,7 +1,7 @@
 from looptools import Timer
 
 from Dockerizer.docker import Docker, gui
-from Dockerizer.docker.config import DOCKER_HISTORY_JSON
+from Dockerizer.config import DOCKER_HISTORY_JSON
 
 
 @Timer.decorator
