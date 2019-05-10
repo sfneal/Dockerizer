@@ -4,6 +4,12 @@ from RuntimeWatch import TaskTracker
 from dirutility import SystemCommand
 
 
+def unpack_image_name(image_name):
+    """Retrieve a (user, repo, tag) tuple by extracting values from a Docker image name string."""
+    split = image_name.split('/', 1)
+    return split[0], split[1].split(':', 1)[0], split[1].split(':', 1)[1]
+
+
 class DockerCommands:
     def __init__(self, source=None, repo=None, tag=None, username=None, host_port=None, container_port=None,
                  dockerfile='Dockerfile', build_cache=True):
