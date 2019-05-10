@@ -33,7 +33,8 @@ setup(
     url='https://github.com/mrstephenneal/Dockerizer',
     entry_points={
         'console_scripts': [
-            'dockerizer = Dockerizer.dockerize:main'
+            'dockerizer = Dockerizer.dockerize:main',
+            'morningpull = Dockerizer.morning_pull:main'
         ]
     },
     license='',
