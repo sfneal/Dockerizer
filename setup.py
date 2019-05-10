@@ -29,6 +29,7 @@ setup(
         'databasetools',
         'PySimpleGUI',
         'RuntimeWatch',
+        'dirutility>=0.6.7'
     ],
     url='https://github.com/mrstephenneal/Dockerizer',
     entry_points={
