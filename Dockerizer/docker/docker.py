@@ -136,8 +136,10 @@ class Docker(TaskTracker):
         self.add_command(sc.command)
         self.add_task('Pushed Docker image {0} to DockerHub repo'.format(self.cmd.docker_image))
 
-    def pull(self):
+    def pull(self, resolve_tag=True):
         """Push a docker image to a DockerHub repo."""
+        if resolve_tag and not self.cmd.tag:
+            self.cmd.tag = self.image_tags()[0]
         print('Pulling Docker image ({0})'.format(self.cmd.docker_image))
         sc = SystemCommand(self.cmd.pull, decode_output=False)
         self.add_command(sc.command)
