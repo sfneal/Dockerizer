@@ -36,7 +36,7 @@ setup(
         'console_scripts': [
             'dockerizer = Dockerizer.dockerize:main',
             'morning-pull = Dockerizer.morning_pull:main',
-            'docker-reset = Dockerizer.reset:main'
+            'docker-reset = Dockerizer.reset:main',
             'docker-clean = Dockerizer.clean:main'
         ]
     },
