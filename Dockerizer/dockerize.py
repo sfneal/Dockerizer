@@ -35,6 +35,7 @@ def dockerize(params):
     docker.show_commands()
     docker.update_history(DOCKER_HISTORY_JSON, params)
     print(docker.available_commands)
+    return docker
 
 
 def main():
@@ -47,8 +48,8 @@ def main():
             break
 
     # Executing Elastic Beanstalk deployments
-    for params in parameters:
-        dockerize(params)
+    # Return Docker instances for post process parsing
+    return [dockerize(params) for params in parameters]
 
 
 if __name__ == '__main__':
