@@ -103,6 +103,11 @@ class DockerCommands:
         """Retrieve a list of all images on the current machine."""
         return 'docker rmi $(docker images -q)'
 
+    @property
+    def clean(self):
+        """Remove stopped containers and intermediate images from the current machine."""
+        return 'docker system prune -f'
+
 
 class Docker(TaskTracker):
     def __init__(self, source=None, repo=None, tag=None, username=None, host_port=None, container_port=None,
@@ -191,4 +196,8 @@ class Docker(TaskTracker):
     def delete_images(self):
         """Retrieve a list of all images on the current machine."""
         if len(self.images) > 0:
-            return SystemCommand(self.cmd.delete_images).execute()
+            return SystemCommand(self.cmd.delete_images)
+
+    def clean(self):
+        """Remove stopped containers and intermediate images from the current machine."""
+        return SystemCommand(self.cmd.clean)

@@ -37,6 +37,7 @@ setup(
             'dockerizer = Dockerizer.dockerize:main',
             'morningpull = Dockerizer.morning_pull:main',
             'docker-reset = Dockerizer.reset:main'
+            'docker-clean = Dockerizer.clean:main'
         ]
     },
     license='',
