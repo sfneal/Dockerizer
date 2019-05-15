@@ -127,6 +127,34 @@ class Docker(TaskTracker):
         self.cmd = DockerCommands(source, repo, tag, username, host_port, container_port, dockerfile, build_cache)
 
     @property
+    def source(self):
+        return self.cmd.source
+
+    @property
+    def repo(self):
+        return self.cmd.repo
+
+    @property
+    def tag(self):
+        return self.cmd.tag
+
+    @property
+    def username(self):
+        return self.cmd.username
+
+    @property
+    def host_port(self):
+        return self.cmd.host_port
+
+    @property
+    def container_port(self):
+        return self.cmd.container_port
+
+    @property
+    def dockerfile(self):
+        return self.cmd.dockerfile
+
+    @property
     def available_commands(self):
         """Return a string containing all available Docker commands"""
         return '\nAVAILABLE DOCKER COMMANDS:\n' + '\n'.join('{0}'.format(cmd) for cmd in
