@@ -11,10 +11,9 @@ def morning_pull():
     print('\tlist path: {0}'.format(MORNING_PULL_JSON))
     print('\timages to pull:')
     for i, img in enumerate(to_pull):
-        print('\t\t{0:2}: {1}'.format(i, img))
+        print('\t\t{0:2}: {1}'.format(i + 1, img))
 
     if len(to_pull) > 0:
-        print('Pulling {0} images from DockerHub:\n'.format(len(to_pull)))
         for pull in to_pull:
             Docker(**unpack_image_name(pull)).pull()
     else:
