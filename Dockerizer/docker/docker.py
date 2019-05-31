@@ -6,10 +6,15 @@ from dirutility import SystemCommand, Versions
 
 def unpack_image_name(image_name):
     """Retrieve a dict with (user, repo, tag) keys by extracting values from a Docker image name string."""
-    split = image_name.split('/', 1)
-    return {'username': split[0],
-            'repo': split[1].split(':', 1)[0] if ':' in image_name else split[1],
-            'tag': split[1].split(':', 1)[1] if ':' in image_name else None}
+    d = dict()
+    if '/' in image_name:
+        split = image_name.split('/', 1)
+        d['username'] = split[0]
+    else:
+        split = [None, image_name]
+    d['repo'] = split[1].split(':', 1)[0] if ':' in image_name else split[1]
+    d['tag'] = split[1].split(':', 1)[1] if ':' in image_name else None
+    return d
 
 
 class DockerCommands:
@@ -43,10 +48,12 @@ class DockerCommands:
     @property
     def docker_image(self):
         """Concatenate DockerHub user name and environment name to create docker image tag."""
-        i = '{user}/{repo}'.format(user=self.username, repo=self.repo)
+        i = ''
+        i += '{user}/' if self.username else ''
+        i += '{repo}'
         if self.tag:
-            i += ':{tag}'.format(tag=self.tag)
-        return i
+            i += ':{tag}'
+        return i.format(user=self.username, repo=self.repo, tag=self.tag)
 
     @property
     def dockerfile_path(self):
