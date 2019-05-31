@@ -6,8 +6,12 @@ from Dockerizer.docker import Docker, unpack_image_name
 
 @Timer.decorator
 def morning_pull():
-    print('\nMorning pull image list path: {0}\n'.format(MORNING_PULL_JSON))
     to_pull = JSON(MORNING_PULL_JSON).read()['images']
+    print('Morning Pull - Docker image pull utility')
+    print('\tlist path: {0}'.format(MORNING_PULL_JSON))
+    print('\timages to pull:')
+    for i, img in enumerate(to_pull):
+        print('\t\t{0:2}: {1}'.format(i, img))
 
     if len(to_pull) > 0:
         print('Pulling {0} images from DockerHub:\n'.format(len(to_pull)))
