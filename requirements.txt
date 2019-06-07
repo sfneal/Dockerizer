@@ -1,4 +1,4 @@
-databasetools==1.4.5
+databasetools==1.4.6
 differentiate==1.2.1
 dirutility==0.7.0
 looptools==1.2.0

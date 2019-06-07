@@ -26,7 +26,7 @@ setup(
     version=get_version('Dockerizer'),
     packages=find_packages(),
     install_requires=[
-        'databasetools',
+        'databasetools>=1.4.6',
         'PySimpleGUI',
         'RuntimeWatch',
         'dirutility>=0.7.0'
