@@ -69,7 +69,8 @@ def main():
     args = vars(ap.parse_args())
 
     # Run morning pull if no additional arguments were passed
-    if all(k is None for k in args.keys()):
+    if all(k in (None, False) for k in args.values()):
+        print('Morning pull')
         morning_pull()
     else:
         # Display the morning pull list
