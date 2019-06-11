@@ -31,7 +31,7 @@ def remove_image(image, json_path=MORNING_PULL_JSON):
 
 
 def get_mp_list():
-    return mp_json().read()['images']
+    return sorted(mp_json().read()['images'])
 
 
 @Timer.decorator
@@ -81,8 +81,9 @@ def main():
         if args['add']:
             print('Added the following Docker Image(s) to the morning pull list:')
             for image in args['add']:
-                print('\t{0}'.format(image))
-                add_image(image.strip())
+                if image not in mp_json().read()['images']:
+                    print('\t{0}'.format(image))
+                    add_image(image.strip())
 
         # Remove images from the morning pull list
         if args['remove']:
