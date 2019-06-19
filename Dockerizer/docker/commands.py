@@ -80,6 +80,15 @@ class DockerCommands:
         return 'docker images'
 
     @property
+    def image_tags(self):
+        """Retrieve a list of available docker image tags."""
+        cmd = "wget -q https://registry.hub.docker.com/v1/repositories/{0}/{1}/tags ".format(self.username, self.repo)
+        cmd += "-O -  | sed -e 's/[][]//g' -e 's/"
+        cmd += '"//g'
+        cmd += "' -e 's/ //g' | tr '}' '\n'  | awk -F: '{print $3}'"
+        return cmd
+
+    @property
     def containers(self):
         """Return a list of containers on the current machine."""
         return 'docker ps -a -q'

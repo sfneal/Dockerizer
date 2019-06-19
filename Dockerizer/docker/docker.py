@@ -111,13 +111,7 @@ class Docker(TaskTracker):
     @property
     def image_tags(self):
         """Return a list of available tags for a docker image sorted by version."""
-        cmd = "wget -q https://registry.hub.docker.com/v1/repositories/{0}/{1}/tags ".format(self.cmd.username,
-                                                                                             self.cmd.repo)
-        cmd += "-O -  | sed -e 's/[][]//g' -e 's/"
-        cmd += '"//g'
-        cmd += "' -e 's/ //g' | tr '}' '\n'  | awk -F: '{print $3}'"
-
-        return Versions(SystemCommand(cmd).output).sorted
+        return Versions(SystemCommand(self.cmd.image_tags).output).sorted
 
     @property
     def containers(self):
