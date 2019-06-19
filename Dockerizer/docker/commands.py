@@ -100,8 +100,13 @@ class DockerCommands:
 
     @property
     def delete_images(self):
-        """Retrieve a list of all images on the current machine."""
+        """Delete all images on the current machine."""
         return 'docker rmi $(docker images -q)'
+
+    @property
+    def delete_volumes(self):
+        """Delete all volumes on the current machine."""
+        return 'docker volume prune -f'
 
     @property
     def clean(self):

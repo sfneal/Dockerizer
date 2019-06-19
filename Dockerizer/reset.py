@@ -7,6 +7,7 @@ def reset():
     docker = Docker()
     docker.delete_containers()
     docker.delete_images()
+    docker.delete_volumes()
 
 
 def main():

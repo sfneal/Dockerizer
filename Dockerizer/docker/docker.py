@@ -124,9 +124,13 @@ class Docker(TaskTracker):
             SystemCommand(self.cmd.delete_containers)
 
     def delete_images(self):
-        """Retrieve a list of all images on the current machine."""
+        """Delete all images on the current machine."""
         if len(self.images) > 0:
             return SystemCommand(self.cmd.delete_images)
+
+    def delete_volumes(self):
+        """Delete all volumes on the current machine."""
+        return SystemCommand(self.cmd.delete_volumes)
 
     def clean(self):
         """Remove stopped containers and intermediate images from the current machine."""
