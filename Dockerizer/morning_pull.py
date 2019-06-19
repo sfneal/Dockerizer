@@ -34,13 +34,13 @@ def get_mp_list():
     return sorted(mp_json().read()['images'])
 
 
-def print_morning_pull():
-    list_print(get_mp_list(), 'morning-pull Docker Image list:')
+def print_morning_pull(msg='morning-pull Docker Image list:'):
+    list_print(get_mp_list(), msg)
 
 
 def enumerate_images(images=None):
     """Return a dictionary of enumerated Docker images with ID keys and Docker image values."""
-    return {i: item for i, item in enumerate(get_mp_list() if not images else images)}
+    return {i + 1: item for i, item in enumerate(get_mp_list() if not images else images)}
 
 
 @Timer.decorator
@@ -108,11 +108,16 @@ def main():
             print_morning_pull()
             print('\nEnter the ID(s) of the image(s) you would like to remove separated by spaced')
             removals = input('Image(s) to remove: ')
-            image_ids = removals.split(' ')
-            for i_id, img in enumerate_images():
-                if i_id in image_ids:
-                    # remove_image(img.strip())
-                    print('Removing', img.strip())
+            if len(removals) > 0:
+                image_ids = list(map(int, removals.split(' ')))
+                if len(image_ids) > 0:
+                    for i_id, img in enumerate_images().items():
+                        if i_id in image_ids:
+                            print('\tRemoving', img.strip())
+                            remove_image(img.strip())
+                    print_morning_pull('\nNew morning-pull Docker image list:')
+            else:
+                print('No images to remove.')
 
 
 if __name__ == '__main__':
