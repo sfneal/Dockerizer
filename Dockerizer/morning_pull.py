@@ -34,6 +34,15 @@ def get_mp_list():
     return sorted(mp_json().read()['images'])
 
 
+def print_morning_pull():
+    list_print(get_mp_list(), 'morning-pull Docker Image list:')
+
+
+def enumerate_images(images=None):
+    """Return a dictionary of enumerated Docker images with ID keys and Docker image values."""
+    return {i: item for i, item in enumerate(get_mp_list() if not images else images)}
+
+
 @Timer.decorator
 def morning_pull():
     to_pull = get_mp_list()
@@ -59,6 +68,7 @@ def main():
         'add': "Name(s) of the Docker image to add to the morning pull list",
         'remove': "Name(s) of the Docker image to remove from the morning pull list",
         'list': "Display the morning pull Docker Image list",
+        'edit': "Edit the morning-pull docker image list",
     }
 
     # construct the argument parse and parse the arguments
@@ -66,6 +76,7 @@ def main():
     ap.add_argument('--add', help=helpers['add'], nargs='+')
     ap.add_argument('--remove', help=helpers['remove'], nargs='+')
     ap.add_argument('--list', help=helpers['list'], action='store_true')
+    ap.add_argument('--edit', help=helpers['edit'], action='store_true')
     args = vars(ap.parse_args())
 
     # Run morning pull if no additional arguments were passed
@@ -75,7 +86,7 @@ def main():
     else:
         # Display the morning pull list
         if args['list']:
-            list_print(get_mp_list(), 'morning-pull Docker Image list:')
+            print_morning_pull()
 
         # Add images to morning pull list
         if args['add']:
@@ -91,6 +102,17 @@ def main():
             for image in args['remove']:
                 print('\t{0}'.format(image))
                 remove_image(image.strip())
+
+        # Edit the morning-pull Docker image list
+        if args['edit']:
+            print_morning_pull()
+            print('\nEnter the ID(s) of the image(s) you would like to remove separated by spaced')
+            removals = input('Image(s) to remove: ')
+            image_ids = removals.split(' ')
+            for i_id, img in enumerate_images():
+                if i_id in image_ids:
+                    # remove_image(img.strip())
+                    print('Removing', img.strip())
 
 
 if __name__ == '__main__':
