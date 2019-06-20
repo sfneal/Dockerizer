@@ -80,10 +80,8 @@ class MorningPull:
         removals = input('Image(s) to remove: ')
         if len(removals) > 0:
             image_ids = list(map(int, removals.split(' ')))
-            print(image_ids)
             if len(image_ids) > 0:
                 for i_id, img in self.images_dict.items():
-                    print(i_id, img)
                     if i_id in image_ids:
                         print('\tRemoving', img.strip())
                         self._remove(img.strip())
