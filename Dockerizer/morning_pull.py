@@ -19,9 +19,13 @@ class MorningPull:
         return self._json
 
     @property
+    def pull_images(self):
+        return self.json.read()['pull']['images']
+
+    @property
     def existing_images(self):
         if not self._existing_images:
-            self._existing_images = sorted(self.json.read()['images'])
+            self._existing_images = sorted(self.pull_images)
         return self._existing_images
 
     @property
@@ -59,7 +63,7 @@ class MorningPull:
     def add(self, images_to_add):
         print('Added the following Docker Image(s) to the morning pull list:')
         for image in images_to_add:
-            if image not in self.json.read()['images']:
+            if image not in self.pull_images:
                 print('\t{0}'.format(image))
                 self._add(image.strip())
 
