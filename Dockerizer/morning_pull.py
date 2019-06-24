@@ -129,7 +129,11 @@ def main():
     args = vars(ap.parse_args())
 
     # Initialize MorningPull
-    mp = MorningPull() if not args['dev'] else MorningPull(dev=True)
+    if not args['dev']:
+        mp = MorningPull()
+    else:
+        args.pop('dev')
+        mp = MorningPull(dev=True)
 
     # Run morning pull if no additional arguments were passed
     if all(k in (None, False) for k in args.values()):
