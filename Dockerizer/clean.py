@@ -4,7 +4,9 @@ from Dockerizer.docker import Docker
 
 @Timer.decorator
 def clean():
-    Docker().clean()
+    d = Docker()
+    d.clean()
+    d.delete_volumes()
 
 
 def main():

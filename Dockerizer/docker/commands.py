@@ -106,7 +106,7 @@ class DockerCommands:
     @property
     def delete_volumes(self):
         """Delete all volumes on the current machine."""
-        return 'docker volume prune -f'
+        return 'docker volume prune --volumes -f'
 
     @property
     def clean(self):
