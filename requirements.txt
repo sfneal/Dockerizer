@@ -1,7 +1,6 @@
 databasetools==1.4.6
 differentiate==1.2.1
 dirutility==0.7.18
--e git+https://github.com/mrstephenneal/Dockerizer.git@f2eff10e8630b6a54bdf69f03fdefab17b470779#egg=Dockerizer
 looptools==1.2.3
 mysql-connector==2.2.9
 mysql-toolkit==1.9.1
