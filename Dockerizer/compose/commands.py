@@ -40,3 +40,8 @@ class DockerComposeCommands:
         :return:
         """
         return 'docker-compose down {}'.format('-v' if volumes else '')
+
+    @property
+    def bootstrap(self):
+        """Return list of commands to execute for docker-compose bootstrapping."""
+        return self.pull, self.up(detached=True), self.build, self.down(volumes=True), self.up(detached=True)

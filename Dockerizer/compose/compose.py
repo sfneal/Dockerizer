@@ -57,7 +57,7 @@ class DockerCompose(TaskTracker):
         3. Stop running containers and replace with new builds
         """
         print('Bootstrapping docker-compose services')
-        for cmd in (self.cmd.pull, self.cmd.up(detached=True), self.cmd.build, self.cmd.down(volumes=True)):
+        for cmd in self.cmd.bootstrap:
             sc = SystemCommand(cmd, decode_output=True)
             self.add_command(sc.command)
             if sc.success:
