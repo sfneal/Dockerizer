@@ -39,6 +39,7 @@ setup(
             'docker-reset = Dockerizer.reset:main',
             'docker-clean = Dockerizer.clean:main',
             'docker-bootstrap = Dockerizer.bootstrap:main'
+            'docker-reboot = Dockerizer.reboot:main'
         ]
     },
     license='',

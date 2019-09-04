@@ -49,15 +49,21 @@ class DockerCompose(TaskTracker):
 
     @Timer.decorator
     def bootstrap(self):
-        """
-        Bootstrap docker-compose service development by pulling existing images then building services.
-
-        1. Pull existing images for docker-compose services
-        2. Build fresh docker images for services with build contexts
-        3. Stop running containers and replace with new builds
-        """
+        """Bootstrap docker-compose service development by pulling existing images then building services."""
         print('Bootstrapping docker-compose services')
         for index, cmd in enumerate(self.cmd.bootstrap):
+            sc = SystemCommand(cmd, decode_output=True)
+            self.add_command(sc.command)
+            if sc.success:
+                self.add_task('SUCCESS ({}/{}): {}'.format(index + 1, len(self.cmd.bootstrap) + 1, sc.command))
+            else:
+                self.add_task('ERROR   ({}/{}): {}'.format(index + 1, len(self.cmd.bootstrap) + 1, sc.command))
+
+    @Timer.decorator
+    def reboot(self):
+        """Reboot docker-compose container services by rebuilding then restarting."""
+        print('Bootstrapping docker-compose services')
+        for index, cmd in enumerate(self.cmd.reboot):
             sc = SystemCommand(cmd, decode_output=True)
             self.add_command(sc.command)
             if sc.success:

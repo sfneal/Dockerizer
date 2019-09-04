@@ -45,3 +45,8 @@ class DockerComposeCommands:
     def bootstrap(self):
         """Return list of commands to execute for docker-compose bootstrapping."""
         return self.pull, self.up(detached=True), self.build, self.down(volumes=True), self.up(detached=True)
+
+    @property
+    def reboot(self):
+        """Reboot docker-compose container services by rebuilding then restarting."""
+        return self.build, self.down(volumes=True), self.up(detached=True)
