@@ -67,6 +67,6 @@ class DockerCompose(TaskTracker):
             sc = SystemCommand(cmd, decode_output=True)
             self.add_command(sc.command)
             if sc.success:
-                self.add_task('SUCCESS ({}/{}): {}'.format(index + 1, len(self.cmd.bootstrap) + 1, sc.command))
+                self.add_task('SUCCESS ({}/{}): {}'.format(index + 1, len(self.cmd.reboot) + 1, sc.command))
             else:
-                self.add_task('ERROR   ({}/{}): {}'.format(index + 1, len(self.cmd.bootstrap) + 1, sc.command))
+                self.add_task('ERROR   ({}/{}): {}'.format(index + 1, len(self.cmd.reboot) + 1, sc.command))
