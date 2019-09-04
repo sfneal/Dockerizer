@@ -1,3 +1,6 @@
+import os
+
+from looptools import Timer
 from RuntimeWatch import TaskTracker
 from dirutility import SystemCommand
 
@@ -5,13 +8,21 @@ from Dockerizer.compose.commands import DockerComposeCommands
 
 
 class DockerCompose(TaskTracker):
-    def __init__(self, services=None):
+    def __init__(self, directory=os.getcwd(), services=None):
         """
         Docker compose command wrapper.
 
         :param services: List of services to build
         """
+        self._starting_directory = os.getcwd()
+        self.directory = directory
         self.cmd = DockerComposeCommands(services)
+
+        # Change to target directory
+        os.chdir(self.directory)
+
+    def __exit__(self):
+        os.chdir(self._starting_directory)
 
     def pull(self):
         """Pull docker-compose images from Docker Hub."""
@@ -44,6 +55,7 @@ class DockerCompose(TaskTracker):
         self.add_command(sc.command)
         self.add_task('Stopped docker-compose services')
 
+    @Timer.decorator
     def bootstrap(self):
         """
         Bootstrap docker-compose service development by pulling existing images then building services.
