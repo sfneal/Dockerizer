@@ -26,31 +26,23 @@ class DockerCompose(TaskTracker):
 
     def pull(self):
         """Pull docker-compose images from Docker Hub."""
-        print('Pulling Docker images')
         sc = SystemCommand(self.cmd.pull, decode_output=False)
         self.add_command(sc.command)
         self.add_task('Pulled docker-compose service images')
 
     def build(self):
         """Build a docker image for distribution to DockerHub."""
-        print('Building docker-compose services')
         sc = SystemCommand(self.cmd.build, decode_output=False)
         self.add_command(sc.command)
         self.add_task('Built docker-compose services')
 
     def up(self):
         """Run docker-compose services locally."""
-        print('Running docker-compose services locally')
         sc = SystemCommand(self.cmd.up, decode_output=False)
         self.add_command(sc.command)
-        if sc.success:
-            self.add_task('SUCCESS: Running docker-compose services locally')
-        else:
-            self.add_task('ERROR: Unable to running docker-compose services')
 
     def down(self):
         """Push a docker image to a DockerHub repo."""
-        print('Stopping docker-compose services')
         sc = SystemCommand(self.cmd.down, decode_output=False)
         self.add_command(sc.command)
         self.add_task('Stopped docker-compose services')
