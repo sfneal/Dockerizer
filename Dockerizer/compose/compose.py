@@ -52,7 +52,7 @@ class DockerCompose(TaskTracker):
         """Bootstrap docker-compose service development by pulling existing images then building services."""
         print('Bootstrapping docker-compose services')
         for index, cmd in enumerate(self.cmd.bootstrap):
-            sc = SystemCommand(cmd, decode_output=True)
+            sc = SystemCommand(cmd, decode_output=False)
             self.add_command(sc.command)
             if sc.success:
                 self.add_task('SUCCESS ({}/{}): {}'.format(index + 1, len(self.cmd.bootstrap) + 1, sc.command))
@@ -64,7 +64,7 @@ class DockerCompose(TaskTracker):
         """Reboot docker-compose container services by rebuilding then restarting."""
         print('Bootstrapping docker-compose services')
         for index, cmd in enumerate(self.cmd.reboot):
-            sc = SystemCommand(cmd, decode_output=True)
+            sc = SystemCommand(cmd, decode_output=False)
             self.add_command(sc.command)
             if sc.success:
                 self.add_task('SUCCESS ({}/{}): {}'.format(index + 1, len(self.cmd.reboot) + 1, sc.command))
