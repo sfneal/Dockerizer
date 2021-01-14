@@ -23,3 +23,6 @@ before_install:
 
 install:
   - pip install -r requirements.txt
+
+script:
+  - pip install -e .
