@@ -27,7 +27,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'databasetools>=1.4.6',
-        'PySimpleGUI',
+        'PySimpleGUI>=3.39.0',
         'RuntimeWatch',
         'dirutility>=0.7.0'
     ],
