@@ -31,7 +31,7 @@ setup(
         'RuntimeWatch',
         'dirutility>=0.7.0'
     ],
-    url='https://github.com/mrstephenneal/Dockerizer',
+    url='https://github.com/sfneal/Dockerizer',
     entry_points={
         'console_scripts': [
             'dockerizer = Dockerizer.dockerize:main',
